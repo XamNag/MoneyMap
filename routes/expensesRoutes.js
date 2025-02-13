@@ -17,4 +17,3 @@ router.put('/:id', authenticate,  expensesController.updateExpense);
 router.delete('/:id',authenticate,  expensesController.deleteExpense);
 
 module.exports = router;
-
