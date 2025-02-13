@@ -37,7 +37,69 @@ const createIncome = async(req,res) => {
     }
 };
 
+// Get all income for the authenticated user
+const getIncomes = async (req, res) => {
+    try {
+        const userId = req.user.userId; // Extracted from the JWT token
+        // Fetch incomes for the authenticated user using their userId
+         const income = await Income.find({ userId });
+  
+      // Return the income
+      return res.status(200).json({
+        message: 'income retrieved successfully',
+        income: income
+      });
+    } catch (err) {
+      console.error('Error fetching income:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+  // update an income for the authenticated user
+
+  const updateIncome = async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      const { dayOfEntry, income } = req.body;
+      const userId = req.user.userId; // Extracted from the JWT token
+
+      // Ensure the income belongs to the authenticated user
+      const updatedIncome = await Income.findOneAndUpdate(
+        { _id: id, userId }, // Query: Ensure the income belongs to the user
+        { dayOfEntry, income }, // Update fields
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedIncome) {
+        return res.status(404).json({ error: 'Income not found or unauthorized' });
+      }
+  
+      res.status(200).json({ message: 'Income updated successfully', income: updateIncome });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to update income', details: err.message });
+    }
+  };
+
+
+// Delete an income for the authenticated user
+const deleteIncome = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.userId;
+  
+      const deletedIncome = await Income.findOneAndDelete({ _id: id, userId });
+  
+      if (!deletedIncome) {
+        return res.status(404).json({ error: 'Expense not found or unauthorized' });
+      }
+  
+      res.status(200).json({ message: 'Income deleted successfully', expense: deletedIncome });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to delete income', details: err.message });
+    }
+  };
 
 
 
-module.exports = { createIncome    };
+module.exports = { createIncome,  getIncomes,  updateIncome,deleteIncome};

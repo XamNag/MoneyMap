@@ -7,13 +7,13 @@ const router = express.Router();
 // Create a new income
 router.post('/', authenticate, incomeController.createIncome);
 
-// Route to get all expenses for the authenticated user (protected by authentication)
-//router.get('/', authenticate, incomeController.getExpenses);
+// Route to get all income for the authenticated user (protected by authentication)
+router.get('/', authenticate, incomeController.getIncomes);
 
-// Update an Expense by ID
-//router.put('/:id', authenticate,  incomeController.updateExpense);
+// Update an income by ID
+router.put('/:id', authenticate,  incomeController.updateIncome);
 
-// Delete a Daily Goal by ID
-//router.delete('/:id',authenticate,  incomeController.deleteExpense);
+// Delete an income by ID
+router.delete('/:id',authenticate,  incomeController.deleteIncome);
 
 module.exports = router;
