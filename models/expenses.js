@@ -25,7 +25,7 @@ const expenseSchema = new mongoose.Schema({
     ],
     perDayExpense: {
         type: Number, // Total expense for the day
-        required: true, // Ensuring the field is required
+        required: false, // Ensuring the field is required
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId, // Reference to a user
