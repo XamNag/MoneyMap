@@ -13,7 +13,7 @@ app.use(cors())
 
 // Other middleware and configurations...
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3033;
 app.listen(PORT,async () => {
      await mongoConnection()
   console.log(`Server is running on port ${PORT}`);
